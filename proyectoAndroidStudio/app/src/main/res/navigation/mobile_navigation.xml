@@ -8,18 +8,36 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.app_conalep153.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label=""
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.app_conalep153.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_horario"
+        android:name="com.example.app_conalep153.ui.horario.HorarioFragment"
+        android:label=""
+        tools:layout="@layout/fragment_horario" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.app_conalep153.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_calendario"
+        android:name="com.example.app_conalep153.ui.calendario.CalendarioFragment"
+        android:label=""
+        tools:layout="@layout/fragment_calendario" />
+
+    <fragment
+        android:id="@+id/nav_actividades"
+        android:name="com.example.app_conalep153.ui.actividad.ActividadFragment"
+        android:label=""
+        tools:layout="@layout/fragment_actividad" />
+
+    <fragment
+        android:id="@+id/nav_docentes"
+        android:name="com.example.app_conalep153.ui.docente.DocenteFragment"
+        android:label=""
+        tools:layout="@layout/fragment_docente" />
+
+    <fragment
+        android:id="@+id/nav_grupos"
+        android:name="com.example.app_conalep153.ui.grupo.GrupoFragment"
+        android:label=""
+        tools:layout="@layout/fragment_grupo" />
 </navigation>

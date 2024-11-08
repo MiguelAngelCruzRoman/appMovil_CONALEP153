@@ -51,9 +51,9 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="4dp"
                     android:fontFamily="@font/montserrat_semibold"
+                    android:text="Usuario o correo:"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:text="Usuario o correo:" />
+                    android:textSize="15sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textFieldUsuarname"

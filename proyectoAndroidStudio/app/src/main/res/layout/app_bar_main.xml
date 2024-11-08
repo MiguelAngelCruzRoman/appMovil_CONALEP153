@@ -15,9 +15,27 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="@color/institucional"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.App_CONALEP153.PopupOverlay" />
+            app:popupTheme="@style/Theme.App_CONALEP153.PopupOverlay">
 
+            <ImageView
+                android:id="@+id/logo"
+                app:srcCompat="@drawable/logo_blanco"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:contentDescription="Logo del CONALEP 153"/>
+
+            <ImageView
+                android:id="@+id/fotoUsuario"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@string/nav_header_desc"
+                android:layout_gravity="right"
+                app:srcCompat="@mipmap/ic_launcher_round" />
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_main" />

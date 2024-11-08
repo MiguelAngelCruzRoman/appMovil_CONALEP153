@@ -39,12 +39,20 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(v -> {
-            loginUser();
+//            loginUser();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("nombre", "YoMero");
+            intent.putExtra("rol", "ADMINISTRADOR");
+            intent.putExtra("foto", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDHbanfC3zg8tSrZEA8_373O_8Qm5jujM2Mw&s");
+            inputUsername.setText("");
+            inputPassword.setText("");
+            startActivity(intent);
+            finish();
         });
     }
 
     private void loginUser() {
-        String url = "https://6061-187-153-184-22.ngrok-free.app/api/usuario/login";
+        String url = "http://192.168.137.1/ProyectoCONALEP153_AppMovil/codeigniter4-framework/public/api/usuario/login";
 
         String username = inputUsername.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();

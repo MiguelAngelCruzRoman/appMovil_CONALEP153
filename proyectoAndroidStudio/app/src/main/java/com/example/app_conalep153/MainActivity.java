@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private TextView navHeaderName, navHeaderRole, navHeaderSubtitle;
     private ImageView navHeaderImage;
+    private String fotoUrl;
+    private ImageView userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String nombre = intent.getStringExtra("nombre");
         String rol = intent.getStringExtra("rol");
-        String fotoUrl = intent.getStringExtra("foto");
+        fotoUrl = intent.getStringExtra("foto");
 
         navHeaderName.setText(nombre);
         navHeaderRole.setText(rol);
@@ -101,8 +103,43 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        userImage = binding.appBarMain.toolbar.findViewById(R.id.fotoUsuario);
+
+        Picasso.get()
+                .load(fotoUrl)
+                .transform(new com.squareup.picasso.Transformation() {
+                    @Override
+                    public Bitmap transform(Bitmap source) {
+                        int size = Math.min(source.getWidth(), source.getHeight());
+                        Bitmap result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+                        Canvas canvas = new Canvas(result);
+
+                        Paint paint = new Paint();
+                        paint.setAntiAlias(true);
+                        paint.setFilterBitmap(true);
+                        paint.setDither(true);
+
+                        canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint);
+
+                        Rect srcRect = new Rect(0, 0, source.getWidth(), source.getHeight());
+                        Rect dstRect = new Rect(0, 0, size, size);
+                        paint.setXfermode(new android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_IN));
+                        canvas.drawBitmap(source, srcRect, dstRect, paint);
+
+                        source.recycle();
+
+                        return result;
+                    }
+
+                    @Override
+                    public String key() {
+                        return "circle";
+                    }
+                })
+                .into(userImage);
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_actividades, R.id.nav_calendario,R.id.nav_docentes,R.id.nav_grupos, R.id.nav_horario)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -111,15 +148,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    @Override
+ /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
