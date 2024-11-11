@@ -15,7 +15,10 @@ class Actividad extends ResourceController
 
 
     public function index(){
-        $actividades = $this->model->findAll();
+        $limit = $this->request->getGet('limit');
+        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10; 
+        $actividades = $this->model->findAll($limit);
+        
         return $this->respond($actividades);
     }   
     
@@ -100,6 +103,37 @@ class Actividad extends ResourceController
 
         } catch (Exception $e) {
             return $this->failServerError(description: "Ha ocurrido un error en el servidor");
+        }
+    }
+
+
+    public function getActividadesPorUsuario($id_usuario = null) {
+        try {
+            if ($id_usuario === null) {
+                return $this->failValidationError("No se ha pasado un ID de usuario válido.");
+            }
+    
+            // Obtener la conexión a la base de datos
+            $db = \Config\Database::connect();
+            
+            // Construir la consulta SQL con el marcador de posición adecuado
+            $query = "SELECT * FROM actividad_usuario 
+                      JOIN usuario ON actividad_usuario.id_usuario = usuario.id_usuario
+                      JOIN actividad ON actividad_usuario.id_actividad = actividad.id_actividad
+                      WHERE usuario.id_usuario = ?";
+    
+            // Ejecutar la consulta pasando el ID de usuario como parámetro
+            $result = $db->query($query, [$id_usuario])->getResult(); // Corregido aquí
+    
+            // Verificar si se encontraron resultados
+            if (empty($result)) {
+                return $this->failNotFound("No se han encontrado actividades para el usuario con ID: ". $id_usuario);
+            }
+    
+            // Si se encuentran resultados, devolverlos
+            return $this->respond($result);
+        } catch (\Exception $e) {
+            return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
     }
 }

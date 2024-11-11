@@ -13,6 +13,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
     $routes->get('actividad/edit/(:num)', 'Actividad::edit/$1');
     $routes->put('actividad/update/(:num)', 'Actividad::update/$1');
     $routes->delete('actividad/delete/(:num)', 'Actividad::delete/$1');
+    $routes->get('actividad/usuario/(:num)', 'Actividad::getActividadesPorUsuario/$1');
 
 
     $routes->get('usuario', 'Usuario::index');

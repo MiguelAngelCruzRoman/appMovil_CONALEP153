@@ -8,12 +8,16 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView navHeaderImage;
     private String fotoUrl;
     private ImageView userImage;
+    private FrameLayout logoutFrameLayout;
+    private LinearLayout BtnRegresar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = binding.navView;
 
         View headerView = navigationView.getHeaderView(0);
+
+        BtnRegresar = headerView.findViewById(R.id.BtnRegresar);
+        BtnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
+
+
         navHeaderName = headerView.findViewById(R.id.textView);
         navHeaderRole = headerView.findViewById(R.id.textViewRole);
         navHeaderImage = headerView.findViewById(R.id.imageView);
@@ -137,6 +154,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .into(userImage);
+
+        logoutFrameLayout = navigationView.findViewById(R.id.logout_frame_layout);
+        logoutFrameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Cerrando sesión de " + nombre, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_actividades, R.id.nav_calendario,R.id.nav_docentes,R.id.nav_grupos, R.id.nav_horario)

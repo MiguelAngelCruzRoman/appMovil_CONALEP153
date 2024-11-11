@@ -1,0 +1,20 @@
+CRITICAL - 2024-11-11 13:45:27 --> Error: Object of class CodeIgniter\Database\MySQLi\Connection could not be converted to string
+[Method: GET, Route: api/actividad/usuario/3]
+in APPPATH\Controllers\API\Actividad.php on line 123.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\API\Actividad->getActividadesPorUsuario('3')
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\API\Actividad))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\ProyectoCONALEP153_AppMovil\\codeigniter4-framework\\public\\index.php')
+CRITICAL - 2024-11-11 13:46:14 --> Error: Object of class CodeIgniter\Database\MySQLi\Connection could not be converted to string
+[Method: GET, Route: api/actividad/usuario/3]
+in APPPATH\Controllers\API\Actividad.php on line 123.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\API\Actividad->getActividadesPorUsuario('3')
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\API\Actividad))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\ProyectoCONALEP153_AppMovil\\codeigniter4-framework\\public\\index.php')

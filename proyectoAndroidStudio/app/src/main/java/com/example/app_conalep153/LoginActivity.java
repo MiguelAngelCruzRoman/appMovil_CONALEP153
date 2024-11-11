@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         btnLogin.setOnClickListener(v -> {
-//            loginUser();
+//           loginUser();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("nombre", "YoMero");
             intent.putExtra("rol", "ADMINISTRADOR");
