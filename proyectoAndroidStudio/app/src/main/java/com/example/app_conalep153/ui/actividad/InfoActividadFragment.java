@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.app_conalep153.R;
 import com.squareup.picasso.Picasso;  // Importar Picasso
@@ -73,6 +75,16 @@ public class InfoActividadFragment extends Fragment {
 
             tarjetaFecha.setCardBackgroundColor(android.graphics.Color.parseColor(colorFecha));
         }
+
+        ImageView regresar = rootView.findViewById(R.id.regresar);
+
+        regresar.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(rootView);
+
+            if (!navController.popBackStack()) {
+                getActivity().onBackPressed();
+            }
+        });
 
         return rootView;
     }

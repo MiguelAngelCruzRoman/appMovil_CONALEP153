@@ -1,5 +1,7 @@
 package com.example.app_conalep153.ui.actividad;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app_conalep153.R;
+import com.google.android.material.card.MaterialCardView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -33,6 +36,8 @@ public class ActividadFragment extends Fragment {
     ArrayList<Actividad> actividadList;
     ActividadAdapter adapter;
     RequestQueue requestQueue;
+    MaterialCardView mensajeSinResultados;
+
 
     public ActividadFragment() {
         // Required empty public constructor
@@ -52,11 +57,16 @@ public class ActividadFragment extends Fragment {
 
         fetchActividadData();
 
+        mensajeSinResultados = view.findViewById(R.id.mensajeSinResultados);
+
+
         return view;
     }
 
     private void fetchActividadData() {
-        String url = "http://192.168.137.1/ProyectoCONALEP153_AppMovil/codeigniter4-framework/public/api/actividad";
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        String url = "http://192.168.137.1/ProyectoCONALEP153_AppMovil/codeigniter4-framework/public/api/actividad/usuario/"+sharedPreferences.getString("id_usuario",null);
+//        String url = "http://192.168.137.1/ProyectoCONALEP153_AppMovil/codeigniter4-framework/public/api/actividad/usuario/8";
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -65,6 +75,7 @@ public class ActividadFragment extends Fragment {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject actividadJson = response.getJSONObject(i);
+
 
                                 String nombre = actividadJson.getString("nombre");
                                 String descripcion = actividadJson.getString("descripcion");
@@ -78,7 +89,7 @@ public class ActividadFragment extends Fragment {
                             }
 
                             adapter.notifyDataSetChanged();
-
+                            mensajeSinResultados.setVisibility(View.INVISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                             showToast("Error procesando la respuesta");
@@ -88,6 +99,8 @@ public class ActividadFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showToast("Error al realizar la solicitud");
+                mensajeSinResultados.setVisibility(View.VISIBLE);
+
             }
         });
 

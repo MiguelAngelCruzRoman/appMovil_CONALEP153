@@ -122,6 +122,7 @@ class Usuario extends ResourceController
             }
 
             return $this->respond([
+                'id_usuario' => $usuario['id_usuario'],
                 'nombre' => trim($usuario['primerNombre'] . ' ' . ($usuario['segundoNombre'] ?? '') . ' ' . $usuario['apellidoPaterno'] . ' ' . $usuario['apellidoMaterno']),
                 'rol' => $usuario['rol'],
                 'foto' => $usuario['foto'],
