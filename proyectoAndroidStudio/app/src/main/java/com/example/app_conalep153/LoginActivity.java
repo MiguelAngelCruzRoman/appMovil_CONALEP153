@@ -50,14 +50,14 @@ public class LoginActivity extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("id_usuario", "8");
+            editor.putString("id_usuario", "101");
             editor.putString("nombre", "YoMero");
             editor.putString("rol", "ADMINISTRADOR");
             editor.putString("foto", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sea_Otter_%28Enhydra_lutris%29_%2825169790524%29_crop.jpg/250px-Sea_Otter_%28Enhydra_lutris%29_%2825169790524%29_crop.jpg");
             editor.apply();
             Toast.makeText(LoginActivity.this, "Bienvenido " + "YoMero", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("id_usuario", "8");
+            intent.putExtra("id_usuario", "101");
             intent.putExtra("nombre", "YoMero");
             intent.putExtra("rol", "ADMINISTRADOR");
             intent.putExtra("foto", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Sea_Otter_%28Enhydra_lutris%29_%2825169790524%29_crop.jpg/250px-Sea_Otter_%28Enhydra_lutris%29_%2825169790524%29_crop.jpg");

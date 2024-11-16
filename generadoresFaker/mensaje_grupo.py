@@ -49,8 +49,8 @@ def insertar_mensaje_grupo(mensaje_grupo):
         cursor.close()
         conn.close()
 
-num_usuarios = 100  # Número total de usuarios
-num_grupos = 100  # Número total de grupos
+num_usuarios = 100 
+num_grupos = 100  
 
 for _ in range(100):
     mensaje_grupo = generar_mensaje_grupo(num_usuarios, num_grupos)

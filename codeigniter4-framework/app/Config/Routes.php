@@ -22,4 +22,11 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
     $routes->put('usuario/update/(:num)', 'Usuario::update/$1');
     $routes->delete('usuario/delete/(:num)', 'Usuario::delete/$1');
     $routes->post('usuario/login', 'Usuario::login');
+
+    $routes->get('modulo', 'Modulo::index'); 
+    $routes->post('modulo/create', 'Modulo::create'); 
+    $routes->get('modulo/edit/(:num)', 'Modulo::edit/$1'); 
+    $routes->put('modulo/update/(:num)', 'Modulo::update/$1'); 
+    $routes->delete('modulo/delete/(:num)', 'Modulo::delete/$1'); 
+    $routes->get('modulo/usuario/(:num)', 'Modulo::getModulosPorUsuario/$1');
 });

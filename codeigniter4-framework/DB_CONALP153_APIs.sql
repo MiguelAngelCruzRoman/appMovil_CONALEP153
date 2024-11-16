@@ -66,3 +66,29 @@ create table mensaje_docente(
     foreign key (id_alumno) references usuario (id_usuario)
 );
 
+create table modulo(
+	id_modulo int not null auto_increment primary key,
+    id_docente int not null,
+    tipoFormacion enum('DISCIPLINAR BASICA', 'PROFESIONAL','TRAYECTO TECNICO') not null,
+    horasClase varchar(250) not null,
+    nombreModulo varchar(250) not null,
+    salonClase varchar(250) not null,
+    diaSemana enum('LUN','MAR','MIE','JUE','VIE') not null,
+    foreign key (id_docente) references usuario (id_usuario)
+);
+
+create table modulo_grupo(
+	id_moduloGrupo int not null primary key auto_increment,
+    id_modulo int not null,
+    id_grupo int not null,
+    foreign key (id_modulo) references modulo (id_modulo),
+    foreign key (id_grupo) references grupo (id_grupo)
+);
+
+create table grupo_usuario(
+	id_grupoUsuario int not null auto_increment primary key,
+    id_usuario int not null,
+    id_grupo int not null,
+    foreign key (id_usuario) references usuario(id_usuario),
+    foreign key (id_grupo) references grupo(id_grupo)
+);
