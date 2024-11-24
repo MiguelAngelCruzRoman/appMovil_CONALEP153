@@ -54,6 +54,7 @@
                         android:textSize="15sp" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/numeroDiaActual"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
@@ -63,6 +64,7 @@
                         android:textSize="40sp" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/mesDiaActual"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/montserrat_bold"
@@ -144,6 +146,7 @@
                             app:strokeWidth="2dp">
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/horasClase1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/montserrat_semibold"
@@ -166,6 +169,7 @@
                             app:strokeWidth="2dp">
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/horasClase2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/montserrat_semibold"
@@ -221,6 +225,7 @@
                             app:strokeWidth="2dp">
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/nombreModulo1"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/montserrat_medium"
@@ -243,6 +248,7 @@
                             app:strokeWidth="2dp">
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/nombreModulo2"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/montserrat_medium"
@@ -270,11 +276,11 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mensajeSinResultados"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_marginTop="180dp"
         android:padding="16dp"
+        android:visibility="invisible"
         app:cardCornerRadius="20dp"
         app:cardElevation="20dp"
         app:strokeColor="@color/institucional"

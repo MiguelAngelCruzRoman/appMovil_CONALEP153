@@ -29,4 +29,6 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
     $routes->put('modulo/update/(:num)', 'Modulo::update/$1'); 
     $routes->delete('modulo/delete/(:num)', 'Modulo::delete/$1'); 
     $routes->get('modulo/usuario/(:num)', 'Modulo::getModulosPorUsuario/$1');
+    $routes->get('docente/usuario/(:num)', 'Modulo::getModulosPorModuloUsuario/$1');
+    $routes->get('modulo/siguiente/usuario/(:num)', 'Modulo::getSiguientesModulos/$1');
 });

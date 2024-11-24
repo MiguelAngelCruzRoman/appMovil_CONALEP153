@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".ui.horario.HorarioFragment">
 
@@ -47,6 +47,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/LUN"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -77,6 +78,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/MAR"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -107,6 +109,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/MIE"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -137,6 +140,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/JUE"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -167,6 +171,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/VIE"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -202,11 +207,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="-50dp"
             android:layout_marginLeft="-20dp"
-            android:layout_marginRight="-20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="-20dp"
+            android:layout_marginBottom="-50dp"
+            android:orientation="vertical"
             android:padding="16dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -219,23 +224,85 @@
                 app:strokeWidth="3dp">
 
                 <TextView
+                    android:id="@+id/diaMesAnioActual"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:textColor="@color/black"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="@font/montserrat_medium"
                     android:text="Jueves 05, Enero 2024"
-                    android:textSize="18dp"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
 
                 <ListView
                     android:id="@+id/listaHorario"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_centerInParent = "true"
+                    android:layout_centerInParent="true"
                     android:layout_marginTop="30dp"
-                    android:background="#ffffff"
-                    />
+                    android:background="#ffffff" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mensajeSinResultados"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="20dp"
+                    app:strokeColor="#26BFBF"
+                    app:strokeWidth="2dp">
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="15dp"
+                        android:layout_height="150dp"
+                        android:backgroundTint="#26BFBF"
+                        android:padding="16dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="20dp"
+                        app:strokeWidth="3dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="250dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center|left"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:text="El día seleccionado no tiene clases programadas"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/montserrat"
+                                android:text="Favor de seleccionar un día diferente"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/sin_resultados" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
             </com.google.android.material.card.MaterialCardView>
 
 

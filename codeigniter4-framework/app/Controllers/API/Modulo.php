@@ -104,50 +104,201 @@ class Modulo extends ResourceController
     }
 
     public function getModulosPorUsuario($id_usuario = null)
-    {
-        try {
-            if ($id_usuario === null) {
-                return $this->failValidationError("No se ha pasado un ID de usuario válido.");
-            }
-    
-            $limit = $this->request->getGet('limit');
-            $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;  
-
-            $db = \Config\Database::connect();
-
-            $query = "SELECT 
-                        modulo.tipoFormacion, 
-                        modulo.horasClase, 
-                        modulo.nombreModulo,
-                        CONCAT(docente.primerNombre, ' ', 
-                               IFNULL(docente.segundoNombre, ''), ' ', 
-                               docente.apellidoPaterno, ' ', 
-                               docente.apellidoMaterno) AS nombreDocente,
-                        modulo.salonClase,
-                        modulo.diaSemana
-                      FROM 
-                        modulo_grupo
-                      JOIN 
-                        modulo ON modulo.id_modulo = modulo_grupo.id_modulo
-                      JOIN 
-                        usuario AS docente ON modulo.id_docente = docente.id_usuario
-                      JOIN 
-                        grupo ON grupo.id_grupo = modulo_grupo.id_grupo
-                      JOIN 
-                        grupo_usuario ON grupo.id_grupo = grupo_usuario.id_grupo
-                      WHERE 
-                        grupo_usuario.id_usuario = ?
-                      LIMIT ?";
-    
-            $result = $db->query($query, [$id_usuario, $limit])->getResult();
-    
-            if (empty($result)) {
-                return $this->failNotFound("No se han encontrado módulos para el usuario con ID: ". $id_usuario);
-            }
-    
-            return $this->respond($result);
-        } catch (\Exception $e) {
-            return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
+{
+    try {
+        if ($id_usuario === null) {
+            return $this->failValidationError("No se ha pasado un ID de usuario válido.");
         }
-    }    
+
+        $limit = $this->request->getGet('limit');
+        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
+
+        $diaSemana = $this->request->getGet('diaSemana');
+        if ($diaSemana === null) {
+            $diaSemana = strtoupper(date('D')); 
+            $dias = [
+                'Mon' => 'LUN', 
+                'Tue' => 'MAR', 
+                'Wed' => 'MIE', 
+                'Thu' => 'JUE', 
+                'Fri' => 'VIE', 
+                'Sat' => 'SAB', 
+                'Sun' => 'DOM'
+            ];
+            $diaSemana = $dias[$diaSemana] ?? strtoupper(date('D'));
+        }
+
+        $db = \Config\Database::connect();
+
+        $query = "SELECT 
+                    modulo.tipoFormacion, 
+                    modulo.horasClase, 
+                    modulo.nombreModulo, 
+                    modulo.diaSemana,
+                    CONCAT(docente.primerNombre, ' ', 
+                           IFNULL(docente.segundoNombre, ''), ' ', 
+                           docente.apellidoPaterno, ' ', 
+                           docente.apellidoMaterno) AS nombreDocente,
+                    modulo.salonClase
+                  FROM 
+                    modulo_grupo
+                  JOIN 
+                    modulo ON modulo.id_modulo = modulo_grupo.id_modulo
+                  JOIN 
+                    usuario AS docente ON modulo.id_docente = docente.id_usuario
+                  JOIN 
+                    grupo ON grupo.id_grupo = modulo_grupo.id_grupo
+                  JOIN 
+                    grupo_usuario ON grupo.id_grupo = grupo_usuario.id_grupo
+                  WHERE 
+                    grupo_usuario.id_usuario = ? 
+                    AND modulo.diaSemana = ?
+                  LIMIT ?";
+
+        $result = $db->query($query, [$id_usuario, $diaSemana, $limit])->getResult();
+
+        if (empty($result)) {
+            $diaSemanaActual = strtoupper(date('D'));
+            $diaSemanaActual = $dias[$diaSemanaActual] ?? strtoupper(date('D')); 
+
+            $result = $db->query($query, [$id_usuario, $diaSemanaActual, $limit])->getResult();
+        }
+
+        if (empty($result)) {
+            return $this->failNotFound("No se han encontrado módulos para el usuario con ID: ". $id_usuario);
+        }
+
+        return $this->respond($result);
+    } catch (\Exception $e) {
+        return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
+    }
+}
+
+public function getModulosPorModuloUsuario($id_usuario = null)
+{
+    try {
+        if ($id_usuario === null) {
+            return $this->failValidationError("No se ha pasado un ID de usuario válido.");
+        }
+
+        $limit = $this->request->getGet('limit');
+        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
+
+
+        $db = \Config\Database::connect();
+
+        $query = "SELECT 
+                    docente.id_usuario as id_docente,
+                    modulo.nombreModulo AS modulo, 
+                    CONCAT(docente.primerNombre, ' ', 
+                           IFNULL(docente.segundoNombre, ''), ' ', 
+                           docente.apellidoPaterno, ' ', 
+                           docente.apellidoMaterno) AS nombre,
+                    docente.foto 
+                  FROM 
+                    modulo_grupo
+                  JOIN 
+                    modulo ON modulo.id_modulo = modulo_grupo.id_modulo
+                  JOIN 
+                    usuario AS docente ON modulo.id_docente = docente.id_usuario
+                  JOIN 
+                    grupo ON grupo.id_grupo = modulo_grupo.id_grupo
+                  JOIN 
+                    grupo_usuario ON grupo.id_grupo = grupo_usuario.id_grupo
+                  WHERE 
+                    grupo_usuario.id_usuario = ? 
+                  LIMIT ?";
+
+        $result = $db->query($query, [$id_usuario, $limit])->getResult();
+
+        if (empty($result)) {
+            $diaSemanaActual = strtoupper(date('D'));
+            $diaSemanaActual = $dias[$diaSemanaActual] ?? strtoupper(date('D')); 
+
+            $result = $db->query($query, [$id_usuario, $diaSemanaActual, $limit])->getResult();
+        }
+
+        if (empty($result)) {
+            return $this->failNotFound("No se han encontrado docentes para el usuario con ID: ". $id_usuario);
+        }
+
+        return $this->respond($result);
+    } catch (\Exception $e) {
+        return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
+    }
+}
+
+public function getSiguientesModulos($id_usuario = null)  
+{
+    try {
+        if ($id_usuario === null) {
+            return $this->failValidationError("No se ha pasado un ID de usuario válido.");
+        }
+
+        $limit = $this->request->getGet('limit');
+        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 2;
+
+        $db = \Config\Database::connect();
+
+        $zonaHoraria = new \DateTimeZone('America/Mexico_City');
+        $horaActual = (new \DateTime('now', $zonaHoraria))->format('H:i');
+
+        $query = "SELECT 
+                    modulo.horasClase, 
+                    modulo.nombreModulo
+                  FROM 
+                    modulo_grupo
+                  JOIN 
+                    modulo ON modulo.id_modulo = modulo_grupo.id_modulo
+                  JOIN 
+                    usuario AS docente ON modulo.id_docente = docente.id_usuario
+                  JOIN 
+                    grupo ON grupo.id_grupo = modulo_grupo.id_grupo
+                  JOIN 
+                    grupo_usuario ON grupo.id_grupo = grupo_usuario.id_grupo
+                  WHERE 
+                    grupo_usuario.id_usuario = ? 
+                    AND modulo.diaSemana = ?
+                  LIMIT ?";
+
+        $diaSemana = $this->request->getGet('diaSemana');
+        if ($diaSemana === null) {
+            $diaSemana = strtoupper(date('D')); 
+            $dias = [
+                'Mon' => 'LUN', 
+                'Tue' => 'MAR', 
+                'Wed' => 'MIE', 
+                'Thu' => 'JUE', 
+                'Fri' => 'VIE', 
+                'Sat' => 'SAB', 
+                'Sun' => 'DOM'
+            ];
+            $diaSemana = $dias[$diaSemana] ?? strtoupper(date('D'));
+        }
+
+        $result = $db->query($query, [$id_usuario, $diaSemana, $limit])->getResult();
+
+        $modulosFiltrados = array_filter($result, function($modulo) use ($horaActual) {
+            [$horaInicio] = explode(' - ', $modulo->horasClase); 
+            return $horaInicio > $horaActual; 
+        });
+
+        $modulosFinales = array_values($modulosFiltrados);
+        $faltantes = $limit - count($modulosFinales);
+
+        for ($i = 0; $i < $faltantes; $i++) {
+            $modulosFinales[] = (object)[
+                'horasClase' => '++:++ - ++:++',
+                'nombreModulo' => 'SIN CLASES'
+            ];
+        }
+
+        return $this->respond($modulosFinales); 
+    } catch (\Exception $e) {
+        return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
+    }
+}
+
+
+
 }

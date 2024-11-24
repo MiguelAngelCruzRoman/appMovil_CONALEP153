@@ -33,8 +33,8 @@ def generar_horas_clase():
     minuto_inicio = random.choice([0, 15, 30, 45])
     hora_inicio = datetime.strptime(f"{inicio}:{minuto_inicio:02d}", "%H:%M")
     fin = hora_inicio + timedelta(hours=1)
-    hora_inicio_str = hora_inicio.strftime("%I:%M %p")
-    hora_fin_str = fin.strftime("%I:%M %p")
+    hora_inicio_str = hora_inicio.strftime("%I:%M")
+    hora_fin_str = fin.strftime("%I:%M")
     return f"{hora_inicio_str} - {hora_fin_str}"
 
 def generar_modulo(docentes):
