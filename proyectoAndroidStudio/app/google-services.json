@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904842448404",
+    "project_id": "appconalep153",
+    "storage_bucket": "appconalep153.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904842448404:android:497e607acd3ee29873e101",
+        "android_client_info": {
+          "package_name": "com.example.app_conalep153"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC37_K1WWKWA-F_1c4p_hHg3zW5jcKhXsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
