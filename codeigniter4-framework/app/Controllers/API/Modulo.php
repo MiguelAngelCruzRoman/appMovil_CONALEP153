@@ -8,35 +8,38 @@ use Exception;
 
 class Modulo extends ResourceController
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->model = $this->setModel(new ModuloModel());
     }
 
-    public function index(){
+    public function index()
+    {
         $limit = $this->request->getGet('limit');
-        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10; 
+        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
         $modulos = $this->model->findAll($limit);
-        
+
         return $this->respond($modulos);
-    }   
-    
-    public function create(){
+    }
+
+    public function create()
+    {
         try {
             $modulo = $this->request->getJSON();
-            
+
             if ($this->model->insert($modulo)) {
                 $modulo->id_modulo = $this->model->insertID();
                 return $this->respondCreated($modulo);
             } else {
                 return $this->failServerError($this->model->validation->listErrors());
             }
-            
         } catch (\Exception $e) {
             return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
     }
 
-    public function edit($id = null){
+    public function edit($id = null)
+    {
         try {
             if ($id === null) {
                 return $this->failValidationError("No se ha pasado un ID válido.");
@@ -45,7 +48,7 @@ class Modulo extends ResourceController
             $modulo = $this->model->find($id);
 
             if ($modulo === null) {
-                return $this->failNotFound("No se ha encontrado el módulo con el ID: ". $id);
+                return $this->failNotFound("No se ha encontrado el módulo con el ID: " . $id);
             }
 
             return $this->respond($modulo);
@@ -54,7 +57,8 @@ class Modulo extends ResourceController
         }
     }
 
-    public function update($id = null){
+    public function update($id = null)
+    {
         try {
             if ($id === null) {
                 return $this->failValidationError("No se ha pasado un ID válido.");
@@ -63,7 +67,7 @@ class Modulo extends ResourceController
             $moduloVerificado = $this->model->find($id);
 
             if ($moduloVerificado === null) {
-                return $this->failNotFound("No se ha encontrado el módulo con el ID: ". $id);
+                return $this->failNotFound("No se ha encontrado el módulo con el ID: " . $id);
             }
 
             $modulo = $this->request->getJSON();
@@ -74,13 +78,13 @@ class Modulo extends ResourceController
             } else {
                 return $this->failValidationError($this->model->validation->listErrors());
             }
-
         } catch (Exception $e) {
             return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
     }
 
-    public function delete($id = null){
+    public function delete($id = null)
+    {
         try {
             if ($id === null) {
                 return $this->failValidationError("No se ha pasado un ID válido.");
@@ -89,7 +93,7 @@ class Modulo extends ResourceController
             $moduloVerificado = $this->model->find($id);
 
             if ($moduloVerificado === null) {
-                return $this->failNotFound("No se ha encontrado el módulo con el ID: ". $id);
+                return $this->failNotFound("No se ha encontrado el módulo con el ID: " . $id);
             }
 
             if ($this->model->delete($id)) {
@@ -97,40 +101,39 @@ class Modulo extends ResourceController
             } else {
                 return $this->failServerError("No se ha podido eliminar el registro.");
             }
-
         } catch (Exception $e) {
             return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
     }
 
     public function getModulosPorUsuario($id_usuario = null)
-{
-    try {
-        if ($id_usuario === null) {
-            return $this->failValidationError("No se ha pasado un ID de usuario válido.");
-        }
+    {
+        try {
+            if ($id_usuario === null) {
+                return $this->failValidationError("No se ha pasado un ID de usuario válido.");
+            }
 
-        $limit = $this->request->getGet('limit');
-        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
+            $limit = $this->request->getGet('limit');
+            $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
 
-        $diaSemana = $this->request->getGet('diaSemana');
-        if ($diaSemana === null) {
-            $diaSemana = strtoupper(date('D')); 
-            $dias = [
-                'Mon' => 'LUN', 
-                'Tue' => 'MAR', 
-                'Wed' => 'MIE', 
-                'Thu' => 'JUE', 
-                'Fri' => 'VIE', 
-                'Sat' => 'SAB', 
-                'Sun' => 'DOM'
-            ];
-            $diaSemana = $dias[$diaSemana] ?? strtoupper(date('D'));
-        }
+            $diaSemana = $this->request->getGet('diaSemana');
+            if ($diaSemana === null) {
+                $diaSemana = strtoupper(date('D'));
+                $dias = [
+                    'Mon' => 'LUN',
+                    'Tue' => 'MAR',
+                    'Wed' => 'MIE',
+                    'Thu' => 'JUE',
+                    'Fri' => 'VIE',
+                    'Sat' => 'SAB',
+                    'Sun' => 'DOM'
+                ];
+                $diaSemana = $dias[$diaSemana] ?? strtoupper(date('D'));
+            }
 
-        $db = \Config\Database::connect();
+            $db = \Config\Database::connect();
 
-        $query = "SELECT 
+            $query = "SELECT 
                     modulo.tipoFormacion, 
                     modulo.horasClase, 
                     modulo.nombreModulo, 
@@ -155,39 +158,39 @@ class Modulo extends ResourceController
                     AND modulo.diaSemana = ?
                   LIMIT ?";
 
-        $result = $db->query($query, [$id_usuario, $diaSemana, $limit])->getResult();
+            $result = $db->query($query, [$id_usuario, $diaSemana, $limit])->getResult();
 
-        if (empty($result)) {
-            $diaSemanaActual = strtoupper(date('D'));
-            $diaSemanaActual = $dias[$diaSemanaActual] ?? strtoupper(date('D')); 
+            if (empty($result)) {
+                $diaSemanaActual = strtoupper(date('D'));
+                $diaSemanaActual = $dias[$diaSemanaActual] ?? strtoupper(date('D'));
 
-            $result = $db->query($query, [$id_usuario, $diaSemanaActual, $limit])->getResult();
+                $result = $db->query($query, [$id_usuario, $diaSemanaActual, $limit])->getResult();
+            }
+
+            if (empty($result)) {
+                return $this->failNotFound("No se han encontrado módulos para el usuario con ID: " . $id_usuario);
+            }
+
+            return $this->respond($result);
+        } catch (\Exception $e) {
+            return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
-
-        if (empty($result)) {
-            return $this->failNotFound("No se han encontrado módulos para el usuario con ID: ". $id_usuario);
-        }
-
-        return $this->respond($result);
-    } catch (\Exception $e) {
-        return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
     }
-}
 
-public function getModulosPorModuloUsuario($id_usuario = null)
-{
-    try {
-        if ($id_usuario === null) {
-            return $this->failValidationError("No se ha pasado un ID de usuario válido.");
-        }
+    public function getModulosPorModuloUsuario($id_usuario = null)
+    {
+        try {
+            if ($id_usuario === null) {
+                return $this->failValidationError("No se ha pasado un ID de usuario válido.");
+            }
 
-        $limit = $this->request->getGet('limit');
-        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
+            $limit = $this->request->getGet('limit');
+            $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 10;
 
 
-        $db = \Config\Database::connect();
+            $db = \Config\Database::connect();
 
-        $query = "SELECT 
+            $query = "SELECT 
                     docente.id_usuario as id_docente,
                     modulo.nombreModulo AS modulo, 
                     CONCAT(docente.primerNombre, ' ', 
@@ -209,41 +212,41 @@ public function getModulosPorModuloUsuario($id_usuario = null)
                     grupo_usuario.id_usuario = ? 
                   LIMIT ?";
 
-        $result = $db->query($query, [$id_usuario, $limit])->getResult();
+            $result = $db->query($query, [$id_usuario, $limit])->getResult();
 
-        if (empty($result)) {
-            $diaSemanaActual = strtoupper(date('D'));
-            $diaSemanaActual = $dias[$diaSemanaActual] ?? strtoupper(date('D')); 
+            if (empty($result)) {
+                $diaSemanaActual = strtoupper(date('D'));
+                $diaSemanaActual = $dias[$diaSemanaActual] ?? strtoupper(date('D'));
 
-            $result = $db->query($query, [$id_usuario, $diaSemanaActual, $limit])->getResult();
+                $result = $db->query($query, [$id_usuario, $diaSemanaActual, $limit])->getResult();
+            }
+
+            if (empty($result)) {
+                return $this->failNotFound("No se han encontrado docentes para el usuario con ID: " . $id_usuario);
+            }
+
+            return $this->respond($result);
+        } catch (\Exception $e) {
+            return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
-
-        if (empty($result)) {
-            return $this->failNotFound("No se han encontrado docentes para el usuario con ID: ". $id_usuario);
-        }
-
-        return $this->respond($result);
-    } catch (\Exception $e) {
-        return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
     }
-}
 
-public function getSiguientesModulos($id_usuario = null)  
-{
-    try {
-        if ($id_usuario === null) {
-            return $this->failValidationError("No se ha pasado un ID de usuario válido.");
-        }
+    public function getSiguientesModulos($id_usuario = null)
+    {
+        try {
+            if ($id_usuario === null) {
+                return $this->failValidationError("No se ha pasado un ID de usuario válido.");
+            }
 
-        $limit = $this->request->getGet('limit');
-        $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 2;
+            $limit = $this->request->getGet('limit');
+            $limit = is_numeric($limit) && $limit > 0 ? (int)$limit : 2;
 
-        $db = \Config\Database::connect();
+            $db = \Config\Database::connect();
 
-        $zonaHoraria = new \DateTimeZone('America/Mexico_City');
-        $horaActual = (new \DateTime('now', $zonaHoraria))->format('H:i');
+            $zonaHoraria = new \DateTimeZone('America/Mexico_City');
+            $horaActual = (new \DateTime('now', $zonaHoraria))->format('H:i');
 
-        $query = "SELECT 
+            $query = "SELECT 
                     modulo.horasClase, 
                     modulo.nombreModulo
                   FROM 
@@ -261,44 +264,41 @@ public function getSiguientesModulos($id_usuario = null)
                     AND modulo.diaSemana = ?
                   LIMIT ?";
 
-        $diaSemana = $this->request->getGet('diaSemana');
-        if ($diaSemana === null) {
-            $diaSemana = strtoupper(date('D')); 
-            $dias = [
-                'Mon' => 'LUN', 
-                'Tue' => 'MAR', 
-                'Wed' => 'MIE', 
-                'Thu' => 'JUE', 
-                'Fri' => 'VIE', 
-                'Sat' => 'SAB', 
-                'Sun' => 'DOM'
-            ];
-            $diaSemana = $dias[$diaSemana] ?? strtoupper(date('D'));
+            $diaSemana = $this->request->getGet('diaSemana');
+            if ($diaSemana === null) {
+                $diaSemana = strtoupper(date('D'));
+                $dias = [
+                    'Mon' => 'LUN',
+                    'Tue' => 'MAR',
+                    'Wed' => 'MIE',
+                    'Thu' => 'JUE',
+                    'Fri' => 'VIE',
+                    'Sat' => 'SAB',
+                    'Sun' => 'DOM'
+                ];
+                $diaSemana = $dias[$diaSemana] ?? strtoupper(date('D'));
+            }
+
+            $result = $db->query($query, [$id_usuario, $diaSemana, $limit])->getResult();
+
+            $modulosFiltrados = array_filter($result, function ($modulo) use ($horaActual) {
+                [$horaInicio] = explode(' - ', $modulo->horasClase);
+                return $horaInicio > $horaActual;
+            });
+
+            $modulosFinales = array_values($modulosFiltrados);
+            $faltantes = $limit - count($modulosFinales);
+
+            for ($i = 0; $i < $faltantes; $i++) {
+                $modulosFinales[] = (object)[
+                    'horasClase' => '++:++ - ++:++',
+                    'nombreModulo' => 'SIN CLASES'
+                ];
+            }
+
+            return $this->respond($modulosFinales);
+        } catch (\Exception $e) {
+            return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
         }
-
-        $result = $db->query($query, [$id_usuario, $diaSemana, $limit])->getResult();
-
-        $modulosFiltrados = array_filter($result, function($modulo) use ($horaActual) {
-            [$horaInicio] = explode(' - ', $modulo->horasClase); 
-            return $horaInicio > $horaActual; 
-        });
-
-        $modulosFinales = array_values($modulosFiltrados);
-        $faltantes = $limit - count($modulosFinales);
-
-        for ($i = 0; $i < $faltantes; $i++) {
-            $modulosFinales[] = (object)[
-                'horasClase' => '++:++ - ++:++',
-                'nombreModulo' => 'SIN CLASES'
-            ];
-        }
-
-        return $this->respond($modulosFinales); 
-    } catch (\Exception $e) {
-        return $this->failServerError("Ha ocurrido un error en el servidor: " . $e->getMessage());
     }
-}
-
-
-
 }

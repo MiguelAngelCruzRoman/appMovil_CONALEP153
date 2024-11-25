@@ -100,9 +100,7 @@ public class DocenteFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showToast("Error al realizar la solicitud");
                 mensajeSinResultados.setVisibility(View.VISIBLE);
-
             }
         });
 
