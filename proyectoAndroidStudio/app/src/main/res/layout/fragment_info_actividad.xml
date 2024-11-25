@@ -13,25 +13,27 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
         android:padding="16dp"
         app:cardCornerRadius="50dp"
-        app:cardElevation="40dp"
+        app:cardElevation="10dp"
         app:strokeColor="@color/institucional"
-        app:strokeWidth="10dp">
+        app:strokeWidth="4dp">
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/encabezado"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="8dp"
-            app:strokeColor="#000000"
+            android:layout_marginTop="3dp"
+            app:strokeColor="@color/institucional"
             app:strokeWidth="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -44,24 +46,26 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/nombreActividad"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/montserrat_black"
+                    android:layout_width="300dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
-                    android:text="ENCUENTRO CULTURAL"
+                    android:text="PETER CHRISTOPPER WEEKS PATTERSON"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    tools:ignore="SmallSp" />
+                    android:textSize="13sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/contenidoActividad"
             android:layout_width="match_parent"
             android:layout_height="424dp"
             android:layout_marginTop="66dp"
-            app:strokeColor="#000000"
+            app:strokeColor="@color/institucional"
             app:strokeWidth="2dp">
 
             <LinearLayout
@@ -180,26 +184,60 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/chatActividad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="488dp"
-            android:layout_marginBottom="10dp"
-            app:strokeColor="#000000"
+            app:strokeColor="@color/institucional"
             app:strokeWidth="2dp">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/montserrat_black"
-                    android:gravity="center"
-                    android:text="Aquí va el chat jsjs"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    tools:ignore="SmallSp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecyclerViewMensajes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"/>
+
         </com.google.android.material.card.MaterialCardView>
 
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_marginTop="-50dp"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="40dp"
+        app:strokeColor="@color/institucional"
+        app:strokeWidth="2dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="340dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textFieldMensaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="Ingresa un mensaje"
+                    android:backgroundTint="@color/white"
+                    android:textSize="12sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/enviarMensaje"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/send" />
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

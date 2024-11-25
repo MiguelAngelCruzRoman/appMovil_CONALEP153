@@ -1,4 +1,4 @@
-package com.example.app_conalep153.ui.docente;
+package com.example.app_conalep153.ui.actividad;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MensajesDocenteAdapter extends RecyclerView.Adapter<MensajeHolder> {
+public class MensajesActividadAdapter extends RecyclerView.Adapter<MensajeHolder> {
     private List<Mensaje> listaMensajes = new ArrayList<>();
     private Context c;
 
-    public MensajesDocenteAdapter(Context c) {
+    public MensajesActividadAdapter(Context c) {
         this.c = c;
     }
 
@@ -36,7 +35,7 @@ public class MensajesDocenteAdapter extends RecyclerView.Adapter<MensajeHolder> 
     @NonNull
     @Override
     public MensajeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(c).inflate(R.layout.mensaje_list_item, parent, false);
+        View v = LayoutInflater.from(c).inflate(R.layout.mensaje_actividad_list_item, parent, false);
 
         return new MensajeHolder(v);
     }
@@ -45,6 +44,8 @@ public class MensajesDocenteAdapter extends RecyclerView.Adapter<MensajeHolder> 
     public void onBindViewHolder(@NonNull MensajeHolder holder, int position) {
         holder.getFechaHoraMensaje().setText(listaMensajes.get(position).getTiempo());
         holder.getContenidoMensaje().setText(listaMensajes.get(position).getMensaje());
+        holder.getNombreUsuario().setText(listaMensajes.get(position).getUsuario());
+
         Picasso.get()
                 .load(listaMensajes.get(position).getFotoPerfil())
                 .transform(new com.squareup.picasso.Transformation() {
@@ -82,14 +83,8 @@ public class MensajesDocenteAdapter extends RecyclerView.Adapter<MensajeHolder> 
         String idUsuarioActual = sharedPreferences.getString("id_usuario", null);
 
         Mensaje mensaje = listaMensajes.get(position);
-        if (mensaje.getIdUsuario().equals(idUsuarioActual)) {
-            holder.itemView.setScaleX(-1);
-            holder.getFechaHoraMensaje().setScaleX(-1);
-            holder.getContenidoMensaje().setScaleX(-1);
-        } else {
-            holder.itemView.setScaleX(1);
-            holder.getFechaHoraMensaje().setScaleX(1);
-            holder.getContenidoMensaje().setScaleX(1);
+
+        if (!mensaje.getIdUsuario().equals(idUsuarioActual)) {
             int color = android.graphics.Color.parseColor("#A6C56B");
             holder.getTarjetaMensaje().setStrokeColor(color);
         }

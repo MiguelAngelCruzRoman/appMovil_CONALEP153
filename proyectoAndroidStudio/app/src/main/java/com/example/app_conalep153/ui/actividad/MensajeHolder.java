@@ -1,4 +1,4 @@
-package com.example.app_conalep153.ui.docente;
+package com.example.app_conalep153.ui.actividad;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -13,15 +13,15 @@ import com.google.android.material.textview.MaterialTextView;
 public class MensajeHolder extends RecyclerView.ViewHolder {
 
     private ImageView usuarioMensaje;
-    private MaterialTextView contenidoMensaje, fechaHoraMensaje;
+    private MaterialTextView contenidoMensaje, fechaHoraMensaje,nombreUsuario;
     private MaterialCardView tarjetaMensaje;
-
 
     public MensajeHolder(@NonNull View itemView) {
         super(itemView);
         usuarioMensaje = (ImageView) itemView.findViewById(R.id.usuarioMensaje);
         contenidoMensaje = (MaterialTextView) itemView.findViewById(R.id.contenidoMensaje);
         fechaHoraMensaje = (MaterialTextView) itemView.findViewById(R.id.fechaHoraMensaje);
+        nombreUsuario = (MaterialTextView) itemView.findViewById(R.id.nombreUsuario);
         tarjetaMensaje = (MaterialCardView) itemView.findViewById(R.id.tarjetaMensaje);
     }
 
@@ -31,6 +31,14 @@ public class MensajeHolder extends RecyclerView.ViewHolder {
 
     public void setTarjetaMensaje(MaterialCardView tarjetaMensaje) {
         this.tarjetaMensaje = tarjetaMensaje;
+    }
+
+    public MaterialTextView getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(MaterialTextView nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public ImageView getUsuarioMensaje() {
